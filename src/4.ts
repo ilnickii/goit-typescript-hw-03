@@ -3,33 +3,25 @@ interface IKey {
 }
 
 class Key implements IKey {
-  constructor(private signature: number) {
-    this.signature = signature;
-  }
+  constructor(private signature: number) {}
   getSignature(): number {
     return this.signature;
   }
 }
 
 class Person {
-  private key: IKey;
-  constructor(keyObj: IKey) {
-    this.key = keyObj;
-  }
+  constructor(private key: IKey) {}
   getKey(): IKey {
     return this.key;
   }
 }
 
 abstract class House {
-  door: boolean;
-  key: IKey;
+  door: boolean = false;
   tenants: Array<Person> = [];
-  constructor(keyObj: IKey) {
-    this.key = keyObj;
-  }
+  constructor(protected key: IKey) {}
   comeIn(person: Person): void {
-    if (this.door === true) {
+    if (this.door) {
       this.tenants.push(person);
     }
   }
@@ -37,9 +29,7 @@ abstract class House {
 }
 
 class MyHouse extends House {
-  constructor(keyObj: IKey) {
-    super(keyObj);
-  }
+ 
   openDoor(keyObj: IKey): void {
     if (this.key.getSignature() === key.getSignature()) {
       this.door = true;
